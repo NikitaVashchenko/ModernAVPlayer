@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 import AVFoundation
+import MediaPlayer
 
 public final class ModernAVPlayer: NSObject, ModernAVPlayerExposable {
 
@@ -123,6 +124,14 @@ public final class ModernAVPlayer: NSObject, ModernAVPlayerExposable {
     public func stop() {
         context.stop()
     }
+	
+	public func clearRemoteCommands() {
+		MPNowPlayingInfoCenter.default().nowPlayingInfo = [:]
+		
+		for remoteCommand in remoteCommands ?? [] {
+			remoteCommand.reference.removeTarget(nil)
+		}
+	}
     
     ///
     /// Replaces the current player media with the new media
